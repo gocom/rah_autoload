@@ -43,7 +43,7 @@ class rah_autoload
 
 		// If not there, try to find a composer.json from a parent.
 
-		$directory = realpath(txpath);
+		$directory = txpath;
 
 		while (1)
 		{
