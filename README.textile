@@ -22,6 +22,6 @@ p. The above will initialize the autoloader as long as its installed, regardless
 
 h2. Changelog
 
-h3. Version 0.1.0 - upcoming
+h3. Version 0.1.0 - 2013/05/08
 
 * Initial release.
