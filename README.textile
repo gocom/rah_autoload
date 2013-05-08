@@ -1,0 +1,9 @@
+h1. rah_autoload
+
+p. "Textpattern":http://textpattern.com CMS plugin loads the autoloader file generates by "Composer":http://getcomposer.org.
+
+h2. Installing
+
+p. Using "Composer":http://getcomposer.org:
+
+bc. $ composer.phar require rah/rah_autoload

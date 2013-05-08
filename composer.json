@@ -1,0 +1,22 @@
+{
+	"name": "rah/rah_autoload",
+	"description": "Makes Textpattern CMS to load the autoload file Composer generated",
+	"keywords": ["textpattern", "plugin", "autoload", "loader"],
+	"homepage": "https://github.com/gocom/rah_autoload",
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Jukka Svahn",
+			"homepage": "http://rahforum.biz",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/gocom/rah_autoload/issues",
+		"source": "https://github.com/gocom/rah_autoload"
+	},
+	"require": {
+		"php": ">=5.2.0",
+		"textpattern/lock": ">=4.5.0"
+	}
+}
