@@ -1,5 +1,7 @@
 h1. rah_autoload
 
+p. "Packagist":https://packagist.org/packages/rah/rah_autoload | "Twitter":http://twitter.com/gocom | "GitHub":https://github.com/gocom/rah_autoload | "Donate":http://rahforum.biz/donate/rah_autoload
+
 p. "Textpattern":http://textpattern.com CMS plugin loads the autoloader file generates by "Composer":http://getcomposer.org.
 
 h2. Installing
