@@ -4,6 +4,7 @@
 	"keywords": ["textpattern", "plugin", "autoload", "loader"],
 	"homepage": "https://github.com/gocom/rah_autoload",
 	"license": "GPL-2.0",
+	"type": "textpattern-plugin",
 	"authors": [
 		{
 			"name": "Jukka Svahn",
@@ -17,6 +18,7 @@
 	},
 	"require": {
 		"php": ">=5.2.0",
-		"textpattern/lock": ">=4.5.0"
+		"textpattern/lock": ">=4.5.0",
+		"textpattern/installer": "*"
 	}
 }
