@@ -49,7 +49,7 @@ class rah_autoload
 		{
 			$directory = dirname($directory);
 
-			if (!$directory || $directory === '.' || $directory === '/' || !is_dir($directory) || !is_readable($directory))
+			if (!$directory || $directory === '.' || $directory === '/' || $directory === '\\' || !is_dir($directory) || !is_readable($directory))
 			{
 				return false;
 			}
@@ -57,11 +57,6 @@ class rah_autoload
 			if (($composer = $this->isFile($directory . '/composer.json')) !== false)
 			{
 				break;
-			}
-
-			if (substr_count($directory, '/') + substr_count($directory, '\\') === 1)
-			{
-				return false;
 			}
 		}
 
