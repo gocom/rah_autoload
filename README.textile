@@ -10,6 +10,18 @@ p. Using "Composer":http://getcomposer.org:
 
 bc. $ composer.phar require rah/rah_autoload
 
+h2. Using in your plugins
+
+p. To use rah_autoload with your Composer distributed plugins, just add it as a dependency to your @composer.json@:
+
+bc. {
+	"require": {
+		"rah/rah_autoload": "**"
+	}
+}
+
+p. And that's it. Rah_autoload gets installed with your plugin, the autoload file is loaded in Textpattern and you can access your dependencies.
+
 h2. Invoking the autoloader
 
 p. The plugin and autoloader is invoked automatically as long as the plugin is enabled, but the autoloader can be invoked manually too, once installed. Normally this isn't required, but if you want to make sure autoloader is initialized before you try to access the your dependencies, you may invoke the plugin by our own in your plugin.
