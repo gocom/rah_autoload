@@ -16,7 +16,7 @@ p. To use rah_autoload with your Composer distributed plugins, just add it as a 
 
 bc. {
 	"require": {
-		"rah/rah_autoload": "**"
+		"rah/rah_autoload": "*"
 	}
 }
 
