@@ -32,11 +32,6 @@ class rah_autoload
 		register_callback(array($this, 'install'), 'plugin_lifecycle.rah_autoload', 'installed');
 		register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_autoload', 'deleted');
 
-		if (version_compare(PHP_VERSION, '5.3.0') < 0)
-		{
-			$this->autoload = 'autoload_52.php';
-		}
-
 		if (($path = get_pref('rah_autoload_path')) !== '')
 		{
 			foreach (do_list($path) as $file)
@@ -47,6 +42,11 @@ class rah_autoload
 
 		if (get_pref('rah_autoload_search'))
 		{
+			if (version_compare(PHP_VERSION, '5.3.0') < 0)
+			{
+				$this->autoload = 'autoload_52.php';
+			}
+
 			if (($path = $this->find()) !== false)
 			{
 				include_once $path;
