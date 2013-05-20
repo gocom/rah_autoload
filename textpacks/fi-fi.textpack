@@ -1,0 +1,5 @@
+#@admin
+#@language fi-fi
+rah_autoload => Autoload
+rah_autoload_path => Hakemistopolku autoload-tiedostoihin (pilkuin eroteltuna)
+rah_autoload_search => Hae Composer:in autoload-tiedostoja?
