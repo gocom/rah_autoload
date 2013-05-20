@@ -15,11 +15,24 @@
 class rah_autoload
 {
 	/**
+	 * Autoloader file.
+	 *
+	 * @var string
+	 */
+
+	protected $autoload = 'autoload.php';
+
+	/**
 	 * Constructor.
 	 */
 
 	public function __construct()
 	{
+		if (version_compare(PHP_VERSION, '5.3.0') < 0)
+		{
+			$this->autoload = 'autoload_52.php';
+		}
+
 		if (($path = $this->find()) !== false)
 		{
 			include_once $path;
@@ -36,7 +49,7 @@ class rah_autoload
 	{
 		// Try the suggested default.
 
-		if (($path = $this->isFile(dirname(txpath) . '/vendor/autoload.php')) !== false)
+		if (($path = $this->isFile(dirname(txpath) . '/vendor/' . $this->autoload)) !== false)
 		{
 			return $path;
 		}
@@ -62,7 +75,7 @@ class rah_autoload
 
 		// Check the default location.
 
-		if (($path = $this->isFile($directory . '/vendor/autoload.php')) !== false)
+		if (($path = $this->isFile($directory . '/vendor/' . $this->autoload)) !== false)
 		{
 			return $path;
 		}
@@ -71,7 +84,7 @@ class rah_autoload
 
 		if (($json = @json_decode($composer)) && isset($json->config->{'vendor-dir'}))
 		{
-			return $this->isFile($directory . '/' . $json->config->{'vendor-dir'} . '/autoload.php');
+			return $this->isFile($directory . '/' . $json->config->{'vendor-dir'} . '/' . $this->autoload);
 		}
 
 		return false;
