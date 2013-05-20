@@ -1,6 +1,6 @@
 {
 	"name": "rah/rah_autoload",
-	"description": "Loads the autoload file Composer generated in Textpattern CMS",
+	"description": "Loads Composer generated autoload files in Textpattern CMS",
 	"keywords": ["textpattern", "plugin", "autoload", "loader", "dependency", "inject"],
 	"homepage": "https://github.com/gocom/rah_autoload",
 	"license": "GPL-2.0",
