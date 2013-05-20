@@ -28,6 +28,7 @@ class rah_autoload
 
 	public function __construct()
 	{
+		add_privs('prefs.rah_autoload', '1');
 		register_callback(array($this, 'install'), 'plugin_lifecycle.rah_autoload', 'installed');
 		register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_autoload', 'deleted');
 
