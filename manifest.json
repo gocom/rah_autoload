@@ -6,6 +6,6 @@
 	"author"      : "Jukka Svahn",
 	"author_uri"  : "http://rahforum.biz",
 	"order"       : 1,
-	"flags"       : 0,
+	"flags"       : 2,
 	"help"        : {"file" : ["./README.textile"]}
 }

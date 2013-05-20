@@ -28,15 +28,62 @@ class rah_autoload
 
 	public function __construct()
 	{
+		register_callback(array($this, 'install'), 'plugin_lifecycle.rah_autoload', 'installed');
+		register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_autoload', 'deleted');
+
 		if (version_compare(PHP_VERSION, '5.3.0') < 0)
 		{
 			$this->autoload = 'autoload_52.php';
 		}
 
-		if (($path = $this->find()) !== false)
+		if (($path = get_pref('rah_autoload_path')) !== '')
 		{
-			include_once $path;
+			foreach (do_list($path) as $file)
+			{
+				include_once txpath . '/' . $file;
+			}
 		}
+
+		if (get_pref('rah_autoload_search'))
+		{
+			if (($path = $this->find()) !== false)
+			{
+				include_once $path;
+			}
+		}
+	}
+
+	/**
+	 * Installer.
+	 */
+
+	public function install()
+	{
+		$position = 250;
+
+		foreach (
+			array(
+				'rah_autoload_path'   => array('text_input', ''),
+				'rah_autoload_search' => array('yesnoradio', 1),
+			) as $name => $val
+		)
+		{
+			if (get_pref($name, false) === false)
+			{
+				set_pref($name, $val[1], 'rah_autoload', PREF_ADVANCED, $val[0], $position);
+			}
+
+			$position++;
+		}
+	}
+
+	/**
+	 * Uninstaller.
+	 */
+
+	public function uninstall()
+	{
+		safe_delete('txp_prefs', "name like 'rah\_autoload\_%'");
 	}
 
 	/**
