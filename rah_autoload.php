@@ -130,9 +130,12 @@ class rah_autoload
 
         // If not the default, parse the path from the composer.json.
 
-        if (($json = @json_decode($composer)) && isset($json->config->{'vendor-dir'}))
+        if ($composer = file_get_contents($composer))
         {
-            return $this->isFile($directory . '/' . $json->config->{'vendor-dir'} . '/' . $this->autoload);
+            if (($json = @json_decode($composer)) && isset($json->config->{'vendor-dir'}))
+            {
+                return $this->isFile($directory . '/' . $json->config->{'vendor-dir'} . '/' . $this->autoload);
+            }
         }
 
         return false;
