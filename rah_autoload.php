@@ -14,146 +14,146 @@
 
 class rah_autoload
 {
-	/**
-	 * Autoloader file.
-	 *
-	 * @var string
-	 */
+    /**
+     * Autoloader file.
+     *
+     * @var string
+     */
 
-	protected $autoload = 'autoload.php';
+    protected $autoload = 'autoload.php';
 
-	/**
-	 * Constructor.
-	 */
+    /**
+     * Constructor.
+     */
 
-	public function __construct()
-	{
-		add_privs('prefs.rah_autoload', '1');
-		register_callback(array($this, 'install'), 'plugin_lifecycle.rah_autoload', 'installed');
-		register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_autoload', 'deleted');
+    public function __construct()
+    {
+        add_privs('prefs.rah_autoload', '1');
+        register_callback(array($this, 'install'), 'plugin_lifecycle.rah_autoload', 'installed');
+        register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_autoload', 'deleted');
 
-		if (($path = get_pref('rah_autoload_path')) !== '')
-		{
-			foreach (do_list($path) as $file)
-			{
-				include_once txpath . '/' . $file;
-			}
-		}
+        if (($path = get_pref('rah_autoload_path')) !== '')
+        {
+            foreach (do_list($path) as $file)
+            {
+                include_once txpath . '/' . $file;
+            }
+        }
 
-		if (get_pref('rah_autoload_search'))
-		{
-			if (version_compare(PHP_VERSION, '5.3.0') < 0)
-			{
-				$this->autoload = 'autoload_52.php';
-			}
+        if (get_pref('rah_autoload_search'))
+        {
+            if (version_compare(PHP_VERSION, '5.3.0') < 0)
+            {
+                $this->autoload = 'autoload_52.php';
+            }
 
-			if (($path = $this->find()) !== false)
-			{
-				include_once $path;
-			}
-		}
-	}
+            if (($path = $this->find()) !== false)
+            {
+                include_once $path;
+            }
+        }
+    }
 
-	/**
-	 * Installer.
-	 */
+    /**
+     * Installer.
+     */
 
-	public function install()
-	{
-		$position = 250;
+    public function install()
+    {
+        $position = 250;
 
-		foreach (
-			array(
-				'rah_autoload_path'   => array('text_input', ''),
-				'rah_autoload_search' => array('yesnoradio', 1),
-			) as $name => $val
-		)
-		{
-			if (get_pref($name, false) === false)
-			{
-				set_pref($name, $val[1], 'rah_autoload', PREF_ADVANCED, $val[0], $position);
-			}
+        foreach (
+            array(
+                'rah_autoload_path'   => array('text_input', ''),
+                'rah_autoload_search' => array('yesnoradio', 1),
+            ) as $name => $val
+        )
+        {
+            if (get_pref($name, false) === false)
+            {
+                set_pref($name, $val[1], 'rah_autoload', PREF_ADVANCED, $val[0], $position);
+            }
 
-			$position++;
-		}
-	}
+            $position++;
+        }
+    }
 
-	/**
-	 * Uninstaller.
-	 */
+    /**
+     * Uninstaller.
+     */
 
-	public function uninstall()
-	{
-		safe_delete('txp_prefs', "name like 'rah\_autoload\_%'");
-	}
+    public function uninstall()
+    {
+        safe_delete('txp_prefs', "name like 'rah\_autoload\_%'");
+    }
 
-	/**
-	 * Finds the autoload file Composer generated.
-	 *
-	 * @return string|bool The path, or FALSE on failure
-	 */
+    /**
+     * Finds the autoload file Composer generated.
+     *
+     * @return string|bool The path, or FALSE on failure
+     */
 
-	protected function find()
-	{
-		// Try the suggested default.
+    protected function find()
+    {
+        // Try the suggested default.
 
-		if (($path = $this->isFile(dirname(txpath) . '/vendor/' . $this->autoload)) !== false)
-		{
-			return $path;
-		}
+        if (($path = $this->isFile(dirname(txpath) . '/vendor/' . $this->autoload)) !== false)
+        {
+            return $path;
+        }
 
-		// If not there, try to find a composer.json from a parent.
+        // If not there, try to find a composer.json from a parent.
 
-		$directory = txpath;
+        $directory = txpath;
 
-		while (1)
-		{
-			$directory = dirname($directory);
+        while (1)
+        {
+            $directory = dirname($directory);
 
-			if (!$directory || $directory === '.' || $directory === '/' || $directory === '\\' || !is_dir($directory) || !is_readable($directory))
-			{
-				return false;
-			}
+            if (!$directory || $directory === '.' || $directory === '/' || $directory === '\\' || !is_dir($directory) || !is_readable($directory))
+            {
+                return false;
+            }
 
-			if (($composer = $this->isFile($directory . '/composer.json')) !== false)
-			{
-				break;
-			}
-		}
+            if (($composer = $this->isFile($directory . '/composer.json')) !== false)
+            {
+                break;
+            }
+        }
 
-		// Check the default location.
+        // Check the default location.
 
-		if (($path = $this->isFile($directory . '/vendor/' . $this->autoload)) !== false)
-		{
-			return $path;
-		}
+        if (($path = $this->isFile($directory . '/vendor/' . $this->autoload)) !== false)
+        {
+            return $path;
+        }
 
-		// If not the default, parse the path from the composer.json.
+        // If not the default, parse the path from the composer.json.
 
-		if (($json = @json_decode($composer)) && isset($json->config->{'vendor-dir'}))
-		{
-			return $this->isFile($directory . '/' . $json->config->{'vendor-dir'} . '/' . $this->autoload);
-		}
+        if (($json = @json_decode($composer)) && isset($json->config->{'vendor-dir'}))
+        {
+            return $this->isFile($directory . '/' . $json->config->{'vendor-dir'} . '/' . $this->autoload);
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Whether it is a safe file.
-	 *
-	 * @param  string      $file
-	 * @return string|bool The path, or FALSE on failure
-	 */
+    /**
+     * Whether it is a safe file.
+     *
+     * @param  string      $file
+     * @return string|bool The path, or FALSE on failure
+     */
 
-	protected function isFile($file)
-	{
-		if (file_exists($file) && is_file($file) && is_readable($file))
-		{
-			return $file;
-		}
+    protected function isFile($file)
+    {
+        if (file_exists($file) && is_file($file) && is_readable($file))
+        {
+            return $file;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }
 
 new rah_autoload();
