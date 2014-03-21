@@ -12,7 +12,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-class rah_autoload
+class Rah_Autoload
 {
     /**
      * Autoloader file.
@@ -32,23 +32,18 @@ class rah_autoload
         register_callback(array($this, 'install'), 'plugin_lifecycle.rah_autoload', 'installed');
         register_callback(array($this, 'uninstall'), 'plugin_lifecycle.rah_autoload', 'deleted');
 
-        if (($path = get_pref('rah_autoload_path')) !== '')
-        {
-            foreach (do_list($path) as $file)
-            {
+        if (($path = get_pref('rah_autoload_path')) !== '') {
+            foreach (do_list($path) as $file) {
                 include_once txpath . '/' . $file;
             }
         }
 
-        if (get_pref('rah_autoload_search'))
-        {
-            if (version_compare(PHP_VERSION, '5.3.0') < 0)
-            {
+        if (get_pref('rah_autoload_search')) {
+            if (version_compare(PHP_VERSION, '5.3.0') < 0) {
                 $this->autoload = 'autoload_52.php';
             }
 
-            if (($path = $this->find()) !== false)
-            {
+            if (($path = $this->find()) !== false) {
                 include_once $path;
             }
         }
@@ -62,15 +57,11 @@ class rah_autoload
     {
         $position = 250;
 
-        foreach (
-            array(
-                'rah_autoload_path'   => array('text_input', ''),
-                'rah_autoload_search' => array('yesnoradio', 1),
-            ) as $name => $val
-        )
-        {
-            if (get_pref($name, false) === false)
-            {
+        foreach (array(
+            'rah_autoload_path'   => array('text_input', ''),
+            'rah_autoload_search' => array('yesnoradio', 1),
+        ) as $name => $val) {
+            if (get_pref($name, false) === false) {
                 set_pref($name, $val[1], 'rah_autoload', PREF_ADVANCED, $val[0], $position);
             }
 
@@ -97,8 +88,7 @@ class rah_autoload
     {
         // Try the suggested default.
 
-        if (($path = $this->isFile(dirname(txpath) . '/vendor/' . $this->autoload)) !== false)
-        {
+        if (($path = $this->isFile(dirname(txpath) . '/vendor/' . $this->autoload)) !== false) {
             return $path;
         }
 
@@ -106,34 +96,28 @@ class rah_autoload
 
         $directory = txpath;
 
-        while (1)
-        {
+        while (1) {
             $directory = dirname($directory);
 
-            if (!$directory || $directory === '.' || $directory === '/' || $directory === '\\' || !is_dir($directory) || !is_readable($directory))
-            {
+            if (!$directory || $directory === '.' || $directory === '/' || $directory === '\\' || !is_dir($directory) || !is_readable($directory)) {
                 return false;
             }
 
-            if (($composer = $this->isFile($directory . '/composer.json')) !== false)
-            {
+            if (($composer = $this->isFile($directory . '/composer.json')) !== false) {
                 break;
             }
         }
 
         // Check the default location.
 
-        if (($path = $this->isFile($directory . '/vendor/' . $this->autoload)) !== false)
-        {
+        if (($path = $this->isFile($directory . '/vendor/' . $this->autoload)) !== false) {
             return $path;
         }
 
         // If not the default, parse the path from the composer.json.
 
-        if ($composer = file_get_contents($composer))
-        {
-            if (($json = @json_decode($composer)) && isset($json->config->{'vendor-dir'}))
-            {
+        if ($composer = file_get_contents($composer)) {
+            if (($json = @json_decode($composer)) && isset($json->config->{'vendor-dir'})) {
                 return $this->isFile($directory . '/' . $json->config->{'vendor-dir'} . '/' . $this->autoload);
             }
         }
@@ -150,8 +134,7 @@ class rah_autoload
 
     protected function isFile($file)
     {
-        if (file_exists($file) && is_file($file) && is_readable($file))
-        {
+        if (file_exists($file) && is_file($file) && is_readable($file)) {
             return $file;
         }
 
@@ -159,4 +142,4 @@ class rah_autoload
     }
 }
 
-new rah_autoload();
+new Rah_Autoload();
