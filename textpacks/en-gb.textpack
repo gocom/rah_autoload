@@ -1,4 +1,0 @@
-#@admin
-rah_autoload => Autoload
-rah_autoload_path => Path to imported files (comma-separated)
-rah_autoload_search => Search for Composer autoload files?
