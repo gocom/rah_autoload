@@ -39,10 +39,6 @@ class Rah_Autoload
         }
 
         if (get_pref('rah_autoload_search')) {
-            if (version_compare(PHP_VERSION, '5.3.0') < 0) {
-                $this->autoload = 'autoload_52.php';
-            }
-
             if (($path = $this->find()) !== false) {
                 include_once $path;
             }
