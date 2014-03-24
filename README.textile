@@ -34,7 +34,7 @@ The above will initialize the autoloader as long as its installed, regardless of
 
 h2. Changelog
 
-h3. Version 0.3.0 - upcoming
+h3. Version 0.3.0 - 2014/03/24
 
 * Removed: "xrstf/composer-php52":https://packagist.org/packages/xrstf/composer-php52 support.
 * Removed: Preferences. Due to textpattern-installer changes, the plugin can now work automatically. As plugin source is loaded from vendors directory, the source file itself will be able to tell where the autoloader is located.
