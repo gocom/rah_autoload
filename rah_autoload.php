@@ -21,4 +21,4 @@
  * along with rah_autoload. If not, see <http://www.gnu.org/licenses/>.
  */
 
-include __DIR__ . '/../../autoload.php';
+include dirname(dirname(__DIR__)) . '/autoload.php';
