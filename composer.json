@@ -20,5 +20,11 @@
         "php": ">=5.3.0",
         "textpattern/lock": ">=4.4.1",
         "textpattern/installer": "*"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "scripts": {
+        "cs": "./vendor/bin/phpcs"
     }
 }
